@@ -1,3 +1,4 @@
+/*
 package com.EasyBid.UserService.controller;
 
 import com.EasyBid.UserService.model.User;
@@ -11,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 
-@RestController
+@Controller
 public class RegistrationController {
     static int databaseID = 0;
     @Autowired
     private UserRepository userRepository;
 
-    @RequestMapping("/http://localhost:8080/register-User/{userName}/{password}/{name}/{dob}/{phone}/{address}")
+    @RequestMapping("/http://localhost:8080/registerUser/{userName}/{password}/{name}/{dob}/{phone}/{address}")
     public String registerUserGet(@PathVariable("userName") String userName,
                                @PathVariable("password") String password,
                                @PathVariable("name") String name,
@@ -38,3 +39,4 @@ public class RegistrationController {
         return "login";
     }
 }
+*/
