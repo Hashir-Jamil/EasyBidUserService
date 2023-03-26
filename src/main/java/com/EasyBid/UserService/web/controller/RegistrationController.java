@@ -1,24 +1,41 @@
-/*
-package com.EasyBid.UserService.controller;
+package com.EasyBid.UserService.web.controller;
 
-import com.EasyBid.UserService.model.User;
-import com.EasyBid.UserService.model.UserRepository;
+import com.EasyBid.UserService.service.UserService;
+import com.EasyBid.UserService.web.dto.UserRegistrationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.time.LocalDate;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("/registration")
 public class RegistrationController {
-    static int databaseID = 0;
-    @Autowired
-    private UserRepository userRepository;
 
-    @RequestMapping("/http://localhost:8080/registerUser/{userName}/{password}/{name}/{dob}/{phone}/{address}")
+    private UserService userService;
+
+    @Autowired
+    public RegistrationController(UserService userService) {
+        super();
+        this.userService = userService;
+    }
+
+    @ModelAttribute("user")
+    public UserRegistrationDTO userRegistrationDTO() {
+        return new UserRegistrationDTO();
+    }
+
+    @GetMapping
+    public String showRegistrationForm() {
+        return "registration";
+    }
+
+    @PostMapping
+    public String registerUserAccount(@ModelAttribute("user")UserRegistrationDTO userRegistrationDTO) {
+
+        userService.save(userRegistrationDTO);
+        return "redirect:/registration?success";
+    }
+
+/*    @RequestMapping("/http://localhost:8080/registerUser/{userName}/{password}/{name}/{dob}/{phone}/{address}")
     public String registerUserGet(@PathVariable("userName") String userName,
                                @PathVariable("password") String password,
                                @PathVariable("name") String name,
@@ -37,6 +54,5 @@ public class RegistrationController {
         user.setAddress(address);
         userRepository.save(user);
         return "login";
-    }
+    }*/
 }
-*/

@@ -1,22 +1,19 @@
-package com.EasyBid.UserService.controller;
+/*
+package com.EasyBid.UserService.web.controller;
 
 import com.EasyBid.UserService.model.User;
-import com.EasyBid.UserService.model.UserRepository;
+import com.EasyBid.UserService.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-
-import java.time.LocalDate;
+import java.util.Optional;
 
 @Controller
 public class LoginController {
     @Autowired
     private UserRepository userRepository;
-
-    static int databaseID = 0;
-
     RestTemplate restTemplate = new RestTemplate();
     @RequestMapping("/")
     public String loginPage() {
@@ -24,17 +21,17 @@ public class LoginController {
     }
 
     @RequestMapping("/login")
-    public String homePage(@RequestParam("userName") String userName,
+    public String homePage(@RequestParam("email") String email,
                            @RequestParam("password") String password, Model model) {
 
-        User user = null;
+        Optional<User> user = null;
         try {
-            user = userRepository.findByName(userName);
+            user = userRepository.findByEmail(email);
         } catch (Exception e) {
             System.out.println("User not found in our records. Please consider Registration");
         }
         if(user != null) {
-            model.addAttribute("UserName", userName);
+            model.addAttribute("UserName", email);
             return "userHome";
         }
         model.addAttribute("errorUserNotFound", "The user was not found in our records. Please consider Registration.");
@@ -80,13 +77,10 @@ public class LoginController {
                                   @PathVariable("phone") String phone,
                                   @PathVariable("address") String address) {
         User user = new User();
-        LocalDate localDate = LocalDate.parse(dob);
-        databaseID++;
-        user.setId(databaseID);
-        user.setUserID(userName);
+        user.setEmail(userName);
         user.setPassword(password);
-        user.setName(name);
-        user.setDob(localDate);
+        user.setFirstName(name);
+        user.setDob(dob);
         user.setPhoneNumber(phone);
         user.setAddress(address);
         userRepository.save(user);
@@ -94,3 +88,4 @@ public class LoginController {
     }
 
 }
+*/
