@@ -14,7 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,7 +41,6 @@ public class UserServiceImpl implements UserService {
                 userRegistrationDTO.getPhoneNumber(),
                 userRegistrationDTO.getAddress()
                 );
-
         return userRepository.save(user);
     }
 
@@ -54,6 +52,7 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UsernameNotFoundException("This username and password combination does not exist in our records");
         }
+        user.setIsEnabled(true);
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }
 

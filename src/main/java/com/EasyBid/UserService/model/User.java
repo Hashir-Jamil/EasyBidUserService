@@ -4,9 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
-import java.util.HashSet;
 
 @Getter
 @Setter
@@ -27,6 +25,7 @@ public class User implements UserDetails {
     private String phoneNumber;
     private String address;
     private String paymentOptionID;
+    private Boolean isEnabled;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
@@ -78,6 +77,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isEnabled;
     }
 }
