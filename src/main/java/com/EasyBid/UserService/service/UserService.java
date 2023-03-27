@@ -2,6 +2,7 @@ package com.EasyBid.UserService.service;
 
 import com.EasyBid.UserService.model.User;
 import com.EasyBid.UserService.web.dto.UserRegistrationDTO;
+import org.springframework.security.core.userdetails.UserDetailsService;
 /*import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -9,7 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;*/
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
     User save(UserRegistrationDTO userRegistrationDTO);
 
