@@ -1,20 +1,28 @@
 package com.EasyBid.UserService.service;
 
+import com.EasyBid.UserService.model.Role;
 import com.EasyBid.UserService.model.User;
 import com.EasyBid.UserService.repository.UserRepository;
 import com.EasyBid.UserService.web.dto.UserRegistrationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+    @Autowired
+    @Lazy
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
@@ -46,9 +54,11 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UsernameNotFoundException("This username and password combination does not exist in our records");
         }
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+    }
 
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), null);
-
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection <Role> roles) {
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
 }

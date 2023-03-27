@@ -2,8 +2,8 @@ package com.EasyBid.UserService.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-/*import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;*/
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -15,7 +15,7 @@ import java.util.HashSet;
 @NoArgsConstructor
 @Entity
 @Table(name = "members", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,6 +27,14 @@ public class User {
     private String phoneNumber;
     private String address;
     private String paymentOptionID;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "role_id", referencedColumnName = "id"))
+    private Collection<Role> roles;
 
     public User(String email, String password, String firstName, String lastName, String dob, String phoneNumber, String address) {
         this.email = email;
@@ -38,7 +46,7 @@ public class User {
         this.address = address;
     }
 
-/*    @Override
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
@@ -71,5 +79,5 @@ public class User {
     @Override
     public boolean isEnabled() {
         return true;
-    }*/
+    }
 }
