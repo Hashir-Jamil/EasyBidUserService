@@ -33,7 +33,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User save(UserRegistrationDTO userRegistrationDTO) {
 
-        User user = new User(userRegistrationDTO.getEmail(),
+        User user = new User(
+                userRegistrationDTO.getEmail(),
                 bCryptPasswordEncoder.encode(userRegistrationDTO.getPassword()),
                 userRegistrationDTO.getFirstName(),
                 userRegistrationDTO.getLastName(),
