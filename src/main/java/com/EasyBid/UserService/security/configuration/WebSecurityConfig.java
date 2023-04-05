@@ -23,6 +23,17 @@ public class WebSecurityConfig {
     @Autowired
     private final UserService userService;
 
+    //    @Autowired
+//    private CustomAuthenticationSuccessHandler authenticationSuccessHandler;
+//    @Bean
+//    public CustomAuthenticationSuccessHandler customHandler(){
+//        return CustomAuthenticationSuccessHandler.getInstance();
+//    }
+    @Bean
+    public CustomAuthenticationSuccessHandler customHandler(){
+        return CustomAuthenticationSuccessHandler.getInstance();
+    }
+
     //private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Bean
@@ -34,7 +45,7 @@ public class WebSecurityConfig {
     protected DefaultSecurityFilterChain configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable()
-                .authorizeRequests()
+                .authorizeHttpRequests()
                 .requestMatchers("/registration/**", "/js/**", "/css/**", "/img/**")
                 .permitAll()
                 .anyRequest()
@@ -43,6 +54,9 @@ public class WebSecurityConfig {
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
+                //.successHandler(authenticationSuccessHandler)
+                .successHandler(customHandler())
+                //.defaultSuccessUrl("http://localhost:8090/auction?id=1",true)
                 .and()
                 .logout()
                 .invalidateHttpSession(true)
