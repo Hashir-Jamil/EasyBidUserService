@@ -28,5 +28,4 @@ public class LogoutController {
         // Redirect the user to the login page
         return "redirect:/login";
     }
-
 }

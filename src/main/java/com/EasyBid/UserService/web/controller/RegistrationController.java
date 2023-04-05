@@ -33,25 +33,4 @@ public class RegistrationController {
         userService.save(userRegistrationDTO);
         return "redirect:/registration?success";
     }
-
-/*    @RequestMapping("/http://localhost:8080/registerUser/{userName}/{password}/{name}/{dob}/{phone}/{address}")
-    public String registerUserGet(@PathVariable("userName") String userName,
-                               @PathVariable("password") String password,
-                               @PathVariable("name") String name,
-                               @PathVariable("dob") String dob,
-                               @PathVariable("phone") String phone,
-                               @PathVariable("address") String address) {
-        User user = new User();
-        LocalDate localDate = LocalDate.parse(dob);
-        databaseID++;
-        user.setId(databaseID);
-        user.setUserID(userName);
-        user.setPassword(password);
-        user.setName(name);
-        user.setDob(localDate);
-        user.setPhoneNumber(phone);
-        user.setAddress(address);
-        userRepository.save(user);
-        return "login";
-    }*/
 }
