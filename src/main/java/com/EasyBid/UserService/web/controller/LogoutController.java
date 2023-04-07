@@ -2,6 +2,7 @@ package com.EasyBid.UserService.web.controller;
 
 import com.EasyBid.UserService.model.User;
 import com.EasyBid.UserService.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,9 +18,10 @@ public class LogoutController {
     }
 
     @PostMapping("/logout")
-    public String logout(String email) {
+    public String logout(String email, HttpServletRequest request) {
         // Find the user by userId and update the value in the database
         User user = userRepository.findByEmail(email);
+        request.getSession().invalidate();//invalidate the session
         if (user != null) {
             user.setIsEnabled(false);
             userRepository.save(user);

@@ -1,8 +1,10 @@
 package com.EasyBid.UserService.web.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class MainController {
@@ -11,6 +13,12 @@ public class MainController {
     public String login() {
         return "login";
     }
+
+//    @PostMapping("/login")
+//    public void login(HttpServletRequest request, HttpServletResponse response){
+//        String uName = request.getParameter("username");
+//        request.getSession().setAttribute("username", uName);
+//    }
 
     @GetMapping("/")
     public String home(HttpServletResponse response) {
