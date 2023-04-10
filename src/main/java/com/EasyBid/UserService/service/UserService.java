@@ -14,6 +14,10 @@ public interface UserService extends UserDetailsService {
 
     User save(UserRegistrationDTO userRegistrationDTO);
 
+    User findByEmail(String email) throws Exception;
+
+    User findById(Long id);
+
 }
 
 

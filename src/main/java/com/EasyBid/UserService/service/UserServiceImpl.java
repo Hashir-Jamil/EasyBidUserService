@@ -13,12 +13,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
 
+    @Autowired
     private UserRepository userRepository;
     @Autowired
     @Lazy
@@ -43,6 +46,32 @@ public class UserServiceImpl implements UserService {
                 userRegistrationDTO.getAddress()
                 );
         return userRepository.save(user);
+    }
+
+    @Override
+    public User findByEmail(String email) throws Exception {
+        List<User> users = userRepository.findAll();
+
+        if(email == null) throw new Exception("Email not specified");
+        
+        if(users.isEmpty()) throw new Exception("No users registered");
+
+        User output = null;
+
+        for(int i = 0; i < users.size(); i++){
+            //System.out.println("Name: " + temp.get(i).getName() + " Description: " + temp.get(i).getDescription());
+            if(users.get(i).getEmail().contains(email))
+                output = users.get(i);
+        }
+
+        if(output == null) throw new Exception("User not registered");
+
+        return output;
+    }
+
+    @Override
+    public User findById(Long id) {
+        return userRepository.findById(id).get();
     }
 
     @Override
